@@ -37,6 +37,7 @@ jobs:
       - name: Build the Docker image
         run: |
           docker build . --file build/test/Dockerfile --tag rdurica/b-day-challenge:$(echo ${{ github.ref }} | sed 's/refs\/tags\///')
+          docker tag rdurica/b-day-challenge:$(echo ${{ github.ref }} | sed 's/refs\/tags\///') rdurica/b-day-challenge:latest
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -45,3 +46,4 @@ jobs:
       - name: Push Docker image
         run: |
           docker push rdurica/b-day-challenge:$(echo ${{ github.ref }} | sed 's/refs\/tags\///')
+          docker push rdurica/b-day-challenge:latest
