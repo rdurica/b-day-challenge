@@ -21,7 +21,7 @@ RUN apt-get -y autoremove
 RUN a2enmod rewrite
 
 COPY build/test/vhost.conf /etc/apache2/sites-available/000-default.conf
-COPY build/test/.htaccess /app/www/.htaccess
+COPY build/test/.htaccess /app/src/www/.htaccess
 
 # OPCACHE
 ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
@@ -35,12 +35,12 @@ COPY build/test/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 WORKDIR /app
 
-RUN mkdir log
-RUN mkdir temp
-RUN mkdir temp/cache
-RUN chmod 777 log
-RUN chmod 777 temp
-RUN chmod 777 temp/cache
+RUN mkdir src/log
+RUN mkdir src/temp
+RUN mkdir src/temp/cache
+RUN chmod 777 src/log
+RUN chmod 777 src/temp
+RUN chmod 777 src/temp/cache
 
 COPY . .
 
