@@ -21,8 +21,7 @@
 		"tracy/tracy": "^2.9"
 	},
 	"require-dev": {
-		"nette/tester": "^2.4",
-		"symfony/thanks": "^1"
+		"nette/tester": "^2.4"
 	},
 	"autoload": {
 		"psr-4": {
