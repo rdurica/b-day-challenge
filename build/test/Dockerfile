@@ -33,7 +33,7 @@ RUN docker-php-ext-install opcache
 
 COPY build/test/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
-WORKDIR /app/src
+WORKDIR /app
 
 RUN mkdir log
 RUN mkdir temp
