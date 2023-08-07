@@ -1,9 +1,9 @@
 {
-	"name": "nette/web-project",
-	"description": "Nette: Standard Web Project",
+	"name": "rdurica/b-day-challange",
+	"description": "Fun tasks & challenges for memorable birthday celebrations! Videos, images, quizzes & more!",
 	"keywords": ["nette"],
 	"type": "project",
-	"license": ["MIT", "BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+	"license": ["MIT"],
 	"require": {
 		"php": ">= 8.0",
 		"nette/application": "^3.1",
