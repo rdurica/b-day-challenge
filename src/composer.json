@@ -4,20 +4,15 @@
 	"keywords": ["nette"],
 	"type": "project",
 	"license": ["MIT"],
+	"repositories": [
+		{
+			"url": "git@github.com:rdurica/core.git",
+			"type": "git"
+		}
+	],
 	"require": {
 		"php": ">= 8.0",
-		"nette/application": "^3.1",
-		"nette/bootstrap": "^3.2",
-		"nette/caching": "^3.2",
-		"nette/database": "^3.1",
-		"nette/di": "^3.1",
-		"nette/forms": "^3.1",
-		"nette/http": "^3.2",
-		"nette/mail": "^4.0",
-		"nette/robot-loader": "^4.0",
-		"nette/security": "^3.1",
-		"nette/utils": "^4.0",
-		"latte/latte": "^3.0",
+		"rdurica/core": "@dev",
 		"tracy/tracy": "^2.9"
 	},
 	"require-dev": {

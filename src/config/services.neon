@@ -4,7 +4,9 @@ search:
 		classes:
 			- *Factory
 			- *Facade
-
+extensions:
+    rdurica.core: Rdurica\Core\Extension\CoreExtension
 
 services:
 	- App\Router\RouterFactory::createRouter
+	- App\Component\Form\Login\ILoginForm

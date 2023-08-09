@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Presenters;
+namespace App\Presenter;
 
 use Nette;
 use Nette\Application\BadRequestException;
 use Nette\Application\Helpers;
+use Nette\Application\IPresenter;
 use Nette\Application\Request;
 use Nette\Application\Response;
 use Nette\Application\Responses\CallbackResponse;
@@ -17,7 +18,7 @@ use Nette\SmartObject;
 use Tracy\ILogger;
 
 
-final class ErrorPresenter implements Nette\Application\IPresenter
+final class ErrorPresenter implements IPresenter
 {
     use SmartObject;
 
