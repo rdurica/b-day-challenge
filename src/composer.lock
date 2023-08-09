@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "220db28ed2706fbd805b775bc93c584f",
+    "content-hash": "cb0a98fd0448126b0837892ae3d9f99b",
     "packages": [
         {
             "name": "latte/latte",
@@ -1312,8 +1312,14 @@
             "version": "0.1.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:rdurica/core.git",
+                "url": "https://github.com/rdurica/core.git",
                 "reference": "fea8b86c81a45475bb5f63b942149e6ec69dd66f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rdurica/core/zipball/fea8b86c81a45475bb5f63b942149e6ec69dd66f",
+                "reference": "fea8b86c81a45475bb5f63b942149e6ec69dd66f",
+                "shasum": ""
             },
             "require": {
                 "latte/latte": "^3.0",
@@ -1339,6 +1345,7 @@
                     "Rdurica\\Core\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1348,6 +1355,10 @@
                 }
             ],
             "description": "Most used functions and common services",
+            "support": {
+                "issues": "https://github.com/rdurica/core/issues",
+                "source": "https://github.com/rdurica/core/tree/0.1.0"
+            },
             "time": "2023-08-09T21:02:11+00:00"
         },
         {

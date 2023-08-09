@@ -4,12 +4,6 @@
 	"keywords": ["nette"],
 	"type": "project",
 	"license": ["MIT"],
-	"repositories": [
-		{
-			"url": "git@github.com:rdurica/core.git",
-			"type": "git"
-		}
-	],
 	"require": {
 		"php": ">= 8.0",
 		"rdurica/core": "^0.1.0",
