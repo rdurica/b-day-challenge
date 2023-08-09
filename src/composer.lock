@@ -4,26 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94c6aa7f08134255989e2639b78074f4",
+    "content-hash": "220db28ed2706fbd805b775bc93c584f",
     "packages": [
         {
             "name": "latte/latte",
-            "version": "v3.0.6",
+            "version": "v3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/latte.git",
-                "reference": "6f66dcfea7ad76f60b8234139161421e9e1e309f"
+                "reference": "4a5e59b8c6e52a9fa8f138ff78aca850164385e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/6f66dcfea7ad76f60b8234139161421e9e1e309f",
-                "reference": "6f66dcfea7ad76f60b8234139161421e9e1e309f",
+                "url": "https://api.github.com/repos/nette/latte/zipball/4a5e59b8c6e52a9fa8f138ff78aca850164385e0",
+                "reference": "4a5e59b8c6e52a9fa8f138ff78aca850164385e0",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-tokenizer": "*",
-                "php": ">=8.0 <8.3"
+                "php": "8.0 - 8.3"
             },
             "conflict": {
                 "nette/application": "<3.1.7",
@@ -87,9 +87,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/latte/issues",
-                "source": "https://github.com/nette/latte/tree/v3.0.6"
+                "source": "https://github.com/nette/latte/tree/v3.0.7"
             },
-            "time": "2023-03-09T01:34:56+00:00"
+            "time": "2023-08-09T11:39:14+00:00"
         },
         {
             "name": "nette/application",
@@ -1309,11 +1309,11 @@
         },
         {
             "name": "rdurica/core",
-            "version": "dev-main",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:rdurica/core.git",
-                "reference": "14805b8502c2900c00564987746116048f1cc1b3"
+                "reference": "fea8b86c81a45475bb5f63b942149e6ec69dd66f"
             },
             "require": {
                 "latte/latte": "^3.0",
@@ -1333,7 +1333,6 @@
             "require-dev": {
                 "nette/tester": "^2.4"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1349,7 +1348,7 @@
                 }
             ],
             "description": "Most used functions and common services",
-            "time": "2023-08-09T06:19:00+00:00"
+            "time": "2023-08-09T21:02:11+00:00"
         },
         {
             "name": "tracy/tracy",
@@ -1506,9 +1505,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "rdurica/core": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

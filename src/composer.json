@@ -12,7 +12,7 @@
 	],
 	"require": {
 		"php": ">= 8.0",
-		"rdurica/core": "@dev",
+		"rdurica/core": "^0.1.0",
 		"tracy/tracy": "^2.9"
 	},
 	"require-dev": {
