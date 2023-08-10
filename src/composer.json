@@ -6,7 +6,7 @@
 	"license": ["MIT"],
 	"require": {
 		"php": ">= 8.0",
-		"rdurica/core": "^0.1.0",
+		"rdurica/core": "~0.2.0",
 		"tracy/tracy": "^2.9"
 	},
 	"require-dev": {

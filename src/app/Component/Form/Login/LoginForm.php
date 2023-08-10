@@ -12,6 +12,7 @@ use Nette\Utils\ArrayHash;
 use Rdurica\Core\Component\Component;
 use Rdurica\Core\Component\ComponentRenderer;
 use Rdurica\Core\Model\Service\UserService;
+use Rdurica\Core\Util\FlashType;
 
 /**
  * LoginForm.
@@ -57,7 +58,7 @@ final class LoginForm extends Component
             $this->user->login($identity);
             $this->getPresenter()->redirect('Home:');
         } catch (AuthenticationException $e) {
-            $this->getPresenter()->flashMessage($e->getMessage(), 'danger');
+            $this->getPresenter()->flashMessage($e->getMessage(), FlashType::ERROR);
             $this->redirect('this');
         }
     }

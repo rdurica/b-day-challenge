@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Presenter;
 
-use Nette;
 use Nette\Application\BadRequestException;
 use Nette\Application\Helpers;
 use Nette\Application\IPresenter;
@@ -41,7 +40,7 @@ final class ErrorPresenter implements IPresenter
         return new CallbackResponse(
             function (IRequest $httpRequest, IResponse $httpResponse): void {
                 if (preg_match('#^text/html(?:;|$)#', (string)$httpResponse->getHeader('Content-Type'))) {
-                    require __DIR__ . '/templates/Error/500.phtml';
+                    require __DIR__ . '/../../vendor/rdurica/core/src/Templates/Error/500.phtml';
                 }
             }
         );

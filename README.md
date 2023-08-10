@@ -10,6 +10,7 @@ This interactive platform allows administrators to create and assign fun tasks a
 capturing their achievements through various media formats like videos, images, or written responses to quizzes and
 queries.
 
+![image](https://github.com/rdurica/b-day-challenge/assets/16089770/c2bd90bb-ab1a-47fc-911f-9a127dbdb700)
 ## Contributing
 
 If you would like to contribute to this project, please fork the repository and create a pull request. We welcome all

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cb0a98fd0448126b0837892ae3d9f99b",
+    "content-hash": "b37489becfd806acb923fc79025450db",
     "packages": [
         {
             "name": "latte/latte",
@@ -1309,16 +1309,16 @@
         },
         {
             "name": "rdurica/core",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rdurica/core.git",
-                "reference": "fea8b86c81a45475bb5f63b942149e6ec69dd66f"
+                "reference": "2c7227bc6cd99d9b6ee195132b548479d24bdc81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rdurica/core/zipball/fea8b86c81a45475bb5f63b942149e6ec69dd66f",
-                "reference": "fea8b86c81a45475bb5f63b942149e6ec69dd66f",
+                "url": "https://api.github.com/repos/rdurica/core/zipball/2c7227bc6cd99d9b6ee195132b548479d24bdc81",
+                "reference": "2c7227bc6cd99d9b6ee195132b548479d24bdc81",
                 "shasum": ""
             },
             "require": {
@@ -1357,9 +1357,9 @@
             "description": "Most used functions and common services",
             "support": {
                 "issues": "https://github.com/rdurica/core/issues",
-                "source": "https://github.com/rdurica/core/tree/0.1.0"
+                "source": "https://github.com/rdurica/core/tree/0.2.0"
             },
-            "time": "2023-08-09T21:02:11+00:00"
+            "time": "2023-08-10T21:09:19+00:00"
         },
         {
             "name": "tracy/tracy",
