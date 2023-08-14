@@ -5,9 +5,11 @@
 	"type": "project",
 	"license": ["MIT"],
 	"require": {
-		"php": ">= 8.0",
-		"rdurica/core": "~0.2.0",
-		"tracy/tracy": "^2.9"
+		"php": ">= 8.2",
+		"rdurica/core": "dev-main",
+		"tracy/tracy": "^2.9",
+		"ublaboo/datagrid": "dev-master",
+		"nepada/security-annotations": "^5.0"
 	},
 	"require-dev": {
 		"nette/tester": "^2.4"

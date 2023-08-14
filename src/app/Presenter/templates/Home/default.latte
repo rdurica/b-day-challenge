@@ -1,11 +1,62 @@
 {block navbar}{include './../navbar.latte'}{/block}
 {block content}
-    <div class="align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-            <div class="toast-body">
-                Hello, world! This is a toast message.
+<div class="row">
+    <div class="col-md-5 offset-md-2">
+        Actual Challenges
+        <div class="card text-center mt-2">
+            <div class="card-header">Featured</div>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary ">Go somewhere</a>
             </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            <div class="card-footer text-muted">2 days ago</div>
+        </div>
+
+        <div class="card text-center  mt-2">
+            <div class="card-header">Featured</div>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+            <div class="card-footer text-muted">2 days ago</div>
+        </div>
+
+        <div class="card text-center mt-2">
+            <div class="card-header">Featured</div>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+            <div class="card-footer text-muted">2 days ago</div>
         </div>
     </div>
-{/block}
+    <div class="col-md-3 offset-md-2">
+        Completed
+        <div class="card border border-success shadow-0 mt-2" style="max-width: 18rem;">
+            <div class="card-body text-success">
+                <h5 class="card-title">Success card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+            </div>
+        </div>
+
+        <div class="card border border-success shadow-0 mt-2" style="max-width: 18rem;">
+            <div class="card-body text-success">
+                <h5 class="card-title">Success card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+            </div>
+        </div>
+
+        <div class="card border border-success shadow-0 mt-2" style="max-width: 18rem;">
+            <div class="card-body text-success">
+                <h5 class="card-title">Success card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+            </div>
+        </div>
+    </div>
+</div>

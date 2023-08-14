@@ -4,9 +4,15 @@ search:
 		classes:
 			- *Factory
 			- *Facade
+
+session:
+	debugger: TRUE
+
 extensions:
     rdurica.core: Rdurica\Core\Extension\CoreExtension
+    securityAnnotations: Nepada\Bridges\SecurityAnnotationsDI\SecurityAnnotationsExtension
 
 services:
 	- App\Router\RouterFactory::createRouter
 	- App\Component\Form\Login\ILoginForm
+	- App\Model\Manager\RulesManager

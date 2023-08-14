@@ -35,6 +35,4 @@ final class SignPresenter extends Presenter
     {
         return $this->loginForm->create();
     }
-
-
 }

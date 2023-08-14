@@ -1,0 +1,14 @@
+{block navbar}{include './../navbar.latte'}{/block}
+{block content}
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="card mt-2">
+            <div class="card-body">
+                {$data->message|noescape}
+                <br>
+                <a n:if="$user->isAllowed(App\Model\Constant\Resource::RULES, Rdurica\Core\Constant\Privileges::EDIT)"
+                        href="#" class="btn btn-primary">Upravit</a>
+            </div>
+        </div>
+    </div>
+</div>
