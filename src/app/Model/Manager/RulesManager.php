@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Manager;
 
-use Nette\Database\Table\ActiveRow;
+use App\Model\Data\RulesData;
 use Rdurica\Core\Model\Manager\Manager;
 
 /**
@@ -28,10 +28,26 @@ final class RulesManager extends Manager
     /**
      * Get rules.
      *
-     * @return ActiveRow|null
+     * @return RulesData
      */
-    public function findRules(): ?ActiveRow
+    public function findMessage(): RulesData
     {
-        return $this->find()->fetch();
+        $row = $this->find()->fetch();
+
+        $rulesFormData = new RulesData();
+        $rulesFormData->message = $row?->message;
+
+        return $rulesFormData;
+    }
+
+    /**
+     * Update rules.
+     *
+     * @param RulesData $rulesData
+     * @return void
+     */
+    public function update(RulesData $rulesData): void
+    {
+        $this->find()->get(1)->update($rulesData);
     }
 }

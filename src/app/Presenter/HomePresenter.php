@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Presenter;
 
+use App\Component\Form\Rules\IRulesForm;
+use App\Component\Form\Rules\RulesForm;
 use App\Model\Constant\Resource;
 use App\Model\Manager\RulesManager;
 use Nepada\SecurityAnnotations\Annotations\Allowed;
@@ -30,6 +32,9 @@ final class HomePresenter extends Presenter
     #[Inject]
     public RulesManager $rulesManager;
 
+    #[Inject]
+    public IRulesForm $rulesForm;
+
     /**
      * Rules page.
      *
@@ -38,7 +43,27 @@ final class HomePresenter extends Presenter
     #[Allowed(resource: Resource::RULES, privilege: Privileges::VIEW)]
     public function renderRules(): void
     {
-        $data = $this->rulesManager->findRules();
-        $this->getTemplate()->data = $data;
+        $rulesData = $this->rulesManager->findMessage();
+        $this->getTemplate()->rulesData = $rulesData;
+    }
+
+    /**
+     * Edit rules page.
+     *
+     * @return void
+     */
+    #[Allowed(resource: Resource::RULES, privilege: Privileges::EDIT)]
+    public function renderRulesEdit(): void
+    {
+    }
+
+    /**
+     * Rules form component.
+     *
+     * @return RulesForm
+     */
+    protected function createComponentRulesForm(): RulesForm
+    {
+        return $this->rulesForm->create();
     }
 }

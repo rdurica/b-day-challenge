@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Component\Form\Login;
 
+use App\Model\Data\LoginData;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Security\User;
-use Nette\Utils\ArrayHash;
 use Rdurica\Core\Component\Component;
 use Rdurica\Core\Component\ComponentRenderer;
+use Rdurica\Core\Constant\FlashType;
 use Rdurica\Core\Model\Service\UserService;
-use Rdurica\Core\Util\FlashType;
 
 /**
  * LoginForm.
@@ -25,13 +25,25 @@ final class LoginForm extends Component
 {
     use ComponentRenderer;
 
+    /**
+     * Constructor.
+     *
+     * @param UserService $userService
+     * @param User        $user
+     */
     public function __construct(private readonly UserService $userService, private readonly User $user)
     {
     }
 
+    /**
+     * Login form.
+     *
+     * @return Form
+     */
     public function createComponentForm(): Form
     {
         $form = new Form();
+        $form->setMappedType(LoginData::class);
         $form->addText('username', 'Uživatelské jméno')
             ->setRequired();
         $form->addPassword('password', 'Heslo')
@@ -47,14 +59,14 @@ final class LoginForm extends Component
      * Process form.
      *
      * @param Form      $form
-     * @param ArrayHash $values
+     * @param LoginData $data
      * @return void
      * @throws AbortException
      */
-    public function formOnSuccess(Form $form, ArrayHash $values): void
+    public function formOnSuccess(Form $form, LoginData $data): void
     {
         try {
-            $identity = $this->userService->authenticate($values->username, $values->password);
+            $identity = $this->userService->authenticate($data->username, $data->password);
             $this->user->login($identity);
             $this->getPresenter()->redirect('Home:');
         } catch (AuthenticationException $e) {

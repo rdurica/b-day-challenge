@@ -31,7 +31,7 @@ final class SignPresenter extends Presenter
      *
      * @return LoginForm
      */
-    public function createComponentLoginForm(): LoginForm
+    protected function createComponentLoginForm(): LoginForm
     {
         return $this->loginForm->create();
     }
