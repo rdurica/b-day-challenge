@@ -16,4 +16,6 @@ services:
 	- App\Router\RouterFactory::createRouter
 	- App\Component\Form\Login\ILoginForm
 	- App\Component\Form\Rules\IRulesForm
+	- App\Component\Grid\TaskCatalogue\ITaskCatalogueGrid
 	- App\Model\Manager\RulesManager
+	- App\Model\Manager\TaskCatalogueManager

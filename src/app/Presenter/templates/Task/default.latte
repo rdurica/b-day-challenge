@@ -1,0 +1,10 @@
+{block navbar}{include './../navbar.latte'}{/block}
+{block content}
+<div class="d-grid gap-2 col-1 mb-4 offset-10">
+    <button class="btn btn-success" type="button"><i class="fa-solid fa-plus"></i> Vytvorit ukol</button>
+</div>
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        {control taskCatalogueGrid}
+    </div>
+</div>

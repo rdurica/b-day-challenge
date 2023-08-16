@@ -29,12 +29,6 @@
                      loading="lazy"
                 /> B-day challenge
             </a>
-            <!-- Left links -->
-            {*            <ul class="navbar-nav me-auto mb-2 mb-lg-0">*}
-{*                <li class="nav-item">*}
-{*                    <a class="nav-link" href="#">Pridat ukol</a>*}
-{*                </li>*}
-{*            </ul>*}
         </div>
         <!-- Right elements -->
         <div class="d-flex align-items-center">
@@ -60,8 +54,8 @@
                          loading="lazy"/>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-                    <li>
-                        <a class="dropdown-item" href="#">My profile</a>
+                    <li n:if="$user->isAllowed(App\Model\Constant\Resource::TASK_CATALOGUE, Rdurica\Core\Constant\Privileges::VIEW)">
+                        <a class="dropdown-item" n:href="Task:">Katalog úkolů</a>
                     </li>
                     <li>
                         <a class="dropdown-item" n:href="signOut!">Logout</a>

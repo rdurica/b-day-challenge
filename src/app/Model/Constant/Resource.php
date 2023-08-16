@@ -13,6 +13,9 @@ namespace App\Model\Constant;
  */
 final class Resource
 {
-    /** Edit game rules. */
+    /** Game rules. */
     public const RULES = 'rules';
+
+    /** Task catalogue. */
+    public const TASK_CATALOGUE = 'task_catalogue';
 }
