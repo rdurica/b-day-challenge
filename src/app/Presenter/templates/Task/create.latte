@@ -1,0 +1,14 @@
+{block navbar}{include './../navbar.latte'}{/block}
+{block content}
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="card mt-2">
+            <div class="card-header">
+                <i class="fa-solid fa-plus"></i> Vytvoření úkolu
+            </div>
+            <div class="card-body">
+                {control taskForm}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,11 @@
 {block navbar}{include './../navbar.latte'}{/block}
 {block content}
 <div class="d-grid gap-2 col-1 mb-4 offset-10">
-    <button class="btn btn-success" type="button"><i class="fa-solid fa-plus"></i> Vytvorit ukol</button>
+    <a n:href="Task:Create"
+       n:if="$user->isAllowed(App\Model\Constant\Resource::TASK_CATALOGUE, Rdurica\Core\Constant\Privileges::CREATE)"
+            class="btn btn-success" type="button">
+        <i class="fa-solid fa-plus"></i>Vytvořit úkol
+    </a>
 </div>
 <div class="row">
     <div class="col-md-10 offset-md-1">
