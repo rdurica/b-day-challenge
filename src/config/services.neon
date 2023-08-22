@@ -19,7 +19,7 @@ services:
 	- App\Component\Form\Rules\IRulesForm
 	- App\Component\Form\Task\ITaskForm
 	- App\Component\Grid\TaskCatalogue\ITaskCatalogueGrid
-	- App\Model\Factory\TaskFactory
+	- App\Model\Facade\TaskFacade
 	- App\Model\Manager\RulesManager
 	- App\Model\Manager\TaskAlternativeManager
 	- App\Model\Manager\TaskAssignedManager

@@ -8,8 +8,9 @@ use App\Component\Form\CompleteTask\CompleteTaskForm;
 use App\Component\Form\CompleteTask\ICompleteTaskForm;
 use App\Component\Form\Rules\IRulesForm;
 use App\Component\Form\Rules\RulesForm;
+use App\Exception\NewTaskException;
 use App\Model\Constant\Resource;
-use App\Model\Factory\TaskFactory;
+use App\Model\Facade\TaskFacade;
 use App\Model\Manager\RulesManager;
 use Nepada\SecurityAnnotations\Annotations\Allowed;
 use Nepada\SecurityAnnotations\SecurityAnnotations;
@@ -45,7 +46,7 @@ final class HomePresenter extends Presenter
     public ICompleteTaskForm $completeTaskForm;
 
     #[Inject]
-    public TaskFactory $taskFactory;
+    public TaskFacade $taskFactory;
 
     /**
      * Home page.
@@ -82,22 +83,23 @@ final class HomePresenter extends Presenter
 
     public function renderFinishTask(int $taskAssignedId): void
     {
-
     }
+
     /**
      * Start new task.
      *
-     * @param int $taskId
      * @return void
      * @throws AbortException
      */
-    public function handleStartTask(int $taskId): void
+    public function handleStartTask(): void
     {
         try {
-            $this->taskFactory->assignTask($taskId);
+            $this->taskFactory->assignTask();
             $this->flashMessage('Ukol uspesne zapocal.', FlashType::SUCCESS);
         } catch (UniqueConstraintViolationException) {
             $this->flashMessage('Ukol jiz existuje.', FlashType::ERROR);
+        } catch (NewTaskException $e) {
+            $this->flashMessage($e->getMessage(), FlashType::WARNING);
         }
 
         $this->getPresenter()->redirect('this');

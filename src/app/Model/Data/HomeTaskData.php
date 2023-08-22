@@ -15,8 +15,8 @@ use Nette\Database\Table\ActiveRow;
  */
 final class HomeTaskData
 {
-    /** @var ActiveRow|null Task which can be started. */
-    public ?ActiveRow $newTask = null;
+    /** @var bool Are available tasks for user? */
+    public bool $newTask = false;
 
     /** @var ActiveRow|null Active task (started, assigned). */
     public ?ActiveRow $assignedActiveTask = null;

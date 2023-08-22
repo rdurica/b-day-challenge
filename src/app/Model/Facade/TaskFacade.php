@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Factory;
+namespace App\Model\Facade;
 
+use App\Exception\NewTaskException;
 use App\Model\Constant\TaskStatus;
 use App\Model\Data\HomeTaskData;
 use App\Model\Manager\TaskAssignedManager;
@@ -11,13 +12,13 @@ use App\Model\Manager\TaskCatalogueManager;
 use Nette\Security\User;
 
 /**
- * TaskFactory.
+ * TaskFacade.
  *
  * @package   App\Model\Factory
  * @author    Robert Durica <r.durica@gmail.com>
  * @copyright Copyright (c) 2023, Robert Durica
  */
-final class TaskFactory
+final class TaskFacade
 {
 
     /**
@@ -45,20 +46,28 @@ final class TaskFactory
         $data->assignedActiveTask = $this->taskAssignedManager->findActiveTask($this->user->getId());
         if (!$data->assignedActiveTask) {
             $excludedTasks = $this->taskAssignedManager->findIdsOfTasksForExclude($this->user->getId());
-            $data->newTask = $this->taskCatalogueManager->findNewTask($excludedTasks);
+            $newTask = $this->taskCatalogueManager->findNewTask($excludedTasks);
+            $data->newTask = (bool)$newTask;
         }
 
         return $data;
     }
 
-    public function assignTask(int $taskId): void
+    /**
+     * Assign task for user.
+     *
+     * @throws NewTaskException
+     */
+    public function assignTask(): void
     {
-        $task = $this->taskCatalogueManager->findNewTask([], $taskId);
+        $excludedTasks = $this->taskAssignedManager->findIdsOfTasksForExclude($this->user->getId());
+        $newTask = $this->taskCatalogueManager->findNewTask($excludedTasks);
 
-        // Todo: validate
+        if (!$newTask) {
+            throw new NewTaskException();
+        }
 
-
-        $this->taskAssignedManager->assignTaskToUser($taskId, $this->user->getId());
+        $this->taskAssignedManager->assignTaskToUser($newTask->id, $this->user->getId());
     }
 
     public function finishTask(int $taskId): void

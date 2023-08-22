@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Component\Form\CompleteTask;
 
-use App\Model\Factory\TaskFactory;
+use App\Model\Facade\TaskFacade;
 use App\Presenter\HomePresenter;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
@@ -27,9 +27,9 @@ final class CompleteTaskForm extends Component
     /**
      * Constructor.
      *
-     * @param TaskFactory $taskFactory
+     * @param TaskFacade $taskFactory
      */
-    public function __construct(private readonly TaskFactory $taskFactory)
+    public function __construct(private readonly TaskFacade $taskFactory)
     {
     }
 
