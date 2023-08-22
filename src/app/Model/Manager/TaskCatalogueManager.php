@@ -45,7 +45,7 @@ final class TaskCatalogueManager extends Manager
         $date = (new DateTime())->format('Y-m-d');
         $data = $this
             ->find()
-            ->where('start_date >= ?', $date)
+            ->where('start_date <= ?', $date)
             ->where('due_date >= ?', $date)
             ->where('is_enabled = ?', 1);
         if (count($excludedTasks) > 0) {
