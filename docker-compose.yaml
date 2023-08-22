@@ -9,8 +9,7 @@ services:
       - 443:443
     volumes:
       - .:/app/
-      - ./build/dev/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-      - ./build/dev/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
+      - ./upload:/www-data/
     env_file:
       - ./build/dev/example.env
     networks:

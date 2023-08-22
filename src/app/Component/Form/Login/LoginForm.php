@@ -7,12 +7,12 @@ namespace App\Component\Form\Login;
 use App\Model\Data\LoginData;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
-use Nette\Security\AuthenticationException;
 use Nette\Security\User;
 use Rdurica\Core\Component\Component;
 use Rdurica\Core\Component\ComponentRenderer;
 use Rdurica\Core\Constant\FlashType;
-use Rdurica\Core\Model\Service\UserService;
+use Rdurica\Core\Exception\Authentication\AuthenticationException;
+use Rdurica\Core\Model\Service\AuthenticationService;
 
 /**
  * LoginForm.
@@ -28,11 +28,13 @@ final class LoginForm extends Component
     /**
      * Constructor.
      *
-     * @param UserService $userService
-     * @param User        $user
+     * @param AuthenticationService $authenticationService
+     * @param User                  $user
      */
-    public function __construct(private readonly UserService $userService, private readonly User $user)
-    {
+    public function __construct(
+        private readonly AuthenticationService $authenticationService,
+        private readonly User $user
+    ) {
     }
 
     /**
@@ -66,7 +68,7 @@ final class LoginForm extends Component
     public function formOnSuccess(Form $form, LoginData $data): void
     {
         try {
-            $identity = $this->userService->authenticate($data->username, $data->password);
+            $identity = $this->authenticationService->authenticate($data->username, $data->password);
             $this->user->login($identity);
             $this->getPresenter()->redirect('Home:');
         } catch (AuthenticationException $e) {

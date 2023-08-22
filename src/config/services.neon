@@ -14,9 +14,13 @@ extensions:
 
 services:
 	- App\Router\RouterFactory::createRouter
+	- App\Component\Form\CompleteTask\ICompleteTaskForm
 	- App\Component\Form\Login\ILoginForm
 	- App\Component\Form\Rules\IRulesForm
 	- App\Component\Form\Task\ITaskForm
 	- App\Component\Grid\TaskCatalogue\ITaskCatalogueGrid
+	- App\Model\Factory\TaskFactory
 	- App\Model\Manager\RulesManager
+	- App\Model\Manager\TaskAlternativeManager
+	- App\Model\Manager\TaskAssignedManager
 	- App\Model\Manager\TaskCatalogueManager

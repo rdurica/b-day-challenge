@@ -1,20 +1,39 @@
 {block navbar}{include './../navbar.latte'}{/block}
+{varType App\Model\Data\HomeTaskData $data}
 {block content}
 <div class="row">
-    <div class="col-md-6 offset-md-1">
-        <h3>Úkoly</h3>
+    <div n:if="$data->newTask" class="col-md-6 offset-md-1">
         <div class="card text-center mt-2">
             <div class="card-header">Dostupný úkol</div>
             <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary ">Začít</a>
+                <h5 class="card-title">Dostupny novy ukol. Pro start klikni na tlacitko zacit</h5>
+                <a n:href="startTask! $data->newTask->id" class="btn btn-primary ">Začít</a>
             </div>
-            <div class="card-footer text-muted">Končí 22.12.2023</div>
+            <div class="card-footer text-muted">Končí {$data->newTask->due_date|date: 'd.m.Y'}</div>
         </div>
     </div>
-    <div class="col-md-3 offset-md-1 overflow-auto">
-         <h3>Historie (13/11)</h3>
+    <div n:if="$data->assignedActiveTask" class="col-md-10 offset-md-1">
+        <div class="card mt-2">
+            <div class="card-header text-center ">Aktivní úkol</div>
+            <div class="card-body">
+                <h5 class="card-title text-center">{$data->assignedActiveTask->task->summary}</h5>
+                <p class="card-text">
+                    {$data->assignedActiveTask->task->description|noescape}
+                </p>
+                <a n:href="Home:FinishTask $data->assignedActiveTask->id" class="btn btn-success">Dokoncit</a>
+            </div>
+            <div class="card-footer text-muted">Končí {$data->assignedActiveTask->task->due_date|date: 'd.m.Y'}</div>
+        </div>
+    </div>
+    <div n:if="!$data->newTask && !$data->assignedActiveTask" class="col-md-6 offset-md-1">
+        <div class="card text-center mt-2">
+            <div class="card-body">
+                <h5 class="card-title">Nemas zadne ukoly k plneni.</h5>
+            </div>
+        </div>
+    </div>
+    <div n:if="!$data->assignedActiveTask" class="col-md-3 offset-md-1 overflow-auto">
+        <h3>Historie (13/11)</h3>
         <div class="card shadow-3 mt-2">
             <div class="card-body overflow-auto" style="max-height: 80vh;">
                 <span class="badge badge-primary"><i class="fa-regular fa-clock"></i> Čeká na schválení</span>
