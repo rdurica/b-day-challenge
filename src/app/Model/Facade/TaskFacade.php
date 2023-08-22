@@ -10,6 +10,7 @@ use App\Model\Data\HomeTaskData;
 use App\Model\Manager\TaskAssignedManager;
 use App\Model\Manager\TaskCatalogueManager;
 use Nette\Security\User;
+use Nette\Utils\DateTime;
 
 /**
  * TaskFacade.
@@ -73,6 +74,12 @@ final class TaskFacade
     public function finishTask(int $taskId): void
     {
         // Todo: validate
-        $this->taskAssignedManager->find()->get($taskId)->update(['status_id' => TaskStatus::CONFIRMED]);
+        $this->taskAssignedManager
+            ->find()
+            ->get($taskId)
+            ->update([
+                'status_id' => TaskStatus::CONFIRMED,
+                'finish_date' => new DateTime()
+            ]);
     }
 }
