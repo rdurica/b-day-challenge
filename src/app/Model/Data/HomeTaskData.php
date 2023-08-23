@@ -21,4 +21,7 @@ final class HomeTaskData
     /** @var ActiveRow|null Active task (started, assigned). */
     public ?ActiveRow $assignedActiveTask = null;
 
+    /** @var array All assigned tasks for user. */
+    public array $assignedTaskHistory = [];
+
 }

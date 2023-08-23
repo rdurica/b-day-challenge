@@ -31,44 +31,30 @@
             </div>
         </div>
     </div>
-    <div n:if="!$data->assignedActiveTask" class="col-md-3 offset-md-1 overflow-auto">
-        <h3>Historie (13/11)</h3>
+    <div n:if="!$data->assignedActiveTask && count($data->assignedTaskHistory) > 0"
+            class="col-md-3 offset-md-1 overflow-auto">
+        <h3>Historie ({count($data->assignedTaskHistory)})</h3>
         <div class="card shadow-3 mt-2">
             <div class="card-body overflow-auto" style="max-height: 80vh;">
-                <span class="badge badge-primary"><i class="fa-regular fa-clock"></i> Čeká na schválení</span>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium enim est tempore neque ad illum</p>
-                <hr>
-                <span class="badge badge-success"><i class="fa-regular fa-circle-check"></i> 13.3.2023</span>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium enim est tempore neque ad illum</p>
-                <hr>
-                <span class="badge badge-danger"><i class="fa-regular fa-circle-xmark"></i> 13.3.2023</span>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium enim est tempore neque ad illum</p>
-                <hr>
-                <span class="badge badge-success"><i class="fa-regular fa-circle-check"></i> 13.3.2023</span>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium enim est tempore neque ad illum</p>
-                <hr>
-                <span class="badge badge-success"><i class="fa-regular fa-circle-check"></i> 13.3.2023</span>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium enim est tempore neque ad illum</p>
-                <hr>
-                <span class="badge badge-success"><i class="fa-regular fa-circle-check"></i> 13.3.2023</span>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium enim est tempore neque ad illum</p>
-                <hr>
-                <span class="badge badge-success"><i class="fa-regular fa-circle-check"></i> 13.3.2023</span>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium enim est tempore neque ad illum</p>
-                <hr>
-                <span class="badge badge-success"><i class="fa-regular fa-circle-check"></i> 13.3.2023</span>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium enim est tempore neque ad illum</p>
-                <hr>
-                <span class="badge badge-danger"><i class="fa-regular fa-circle-xmark"></i> 13.3.2023</span>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium enim est tempore neque ad illum</p>
-                <hr>
-                <span class="badge badge-success"><i class="fa-regular fa-circle-check"></i> 13.3.2023</span>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium enim est tempore neque ad illum</p>
-                <hr>
-                <span class="badge badge-success"><i class="fa-regular fa-circle-check"></i> 13.3.2023</span>
-                <p>Lorem ipsum dolor sit amet. Aut praesentium enim est tempore neque ad illum</p>
-                <hr>
+                {foreach $data->assignedTaskHistory as $historyItem}
+                    {if $historyItem->status_id === App\Model\Constant\TaskStatus::CONFIRMED}
+                        <span class="badge badge-primary"><i class="fa-regular fa-clock"></i> Čeká na schválení</span>
+                    {elseif $historyItem->status_id === App\Model\Constant\TaskStatus::DONE}
+                        <span class="badge badge-success"><i
+                                    class="fa-regular fa-circle-check"></i> {$historyItem->finish_date|date: 'd.m.Y'}</span>
+                    {elseif $historyItem->status_id === App\Model\Constant\TaskStatus::EXPIRED}
+                        <span class="badge badge-warning"><i class="fa-regular fa-circle-xmark"></i> Expirace</span>
+
+                    {elseif $historyItem->status_id === App\Model\Constant\TaskStatus::REJECTED}
+                        <span class="badge badge-danger"><i
+                                    class="fa-regular fa-circle-xmark"></i> {$historyItem->finish_date|date: 'd.m.Y'}</span>
+
+                    {/if}
+                    <p>{$historyItem->task->summary}</p>
+                    <hr n:if="!$iterator->last">
+                {/foreach}
             </div>
         </div>
     </div>
 </div>
+

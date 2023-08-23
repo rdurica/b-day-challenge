@@ -43,6 +43,22 @@ final class TaskAssignedManager extends Manager
     }
 
     /**
+     * Find task history for user (confirmed+).
+     *
+     * @param int $userId
+     * @return ActiveRow[]
+     */
+    public function findTaskHistory(int $userId): array
+    {
+        return $this
+            ->find()
+            ->where('user_id = ?', $userId)
+            ->where('status_id > ?', TaskStatus::ACTIVE)
+            ->order('id DESC')
+            ->fetchAll();
+    }
+
+    /**
      * Find all task for user which was assigned in the past.
      *
      * @param int $userId

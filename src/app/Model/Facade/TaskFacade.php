@@ -49,6 +49,7 @@ final class TaskFacade
             $excludedTasks = $this->taskAssignedManager->findIdsOfTasksForExclude($this->user->getId());
             $newTask = $this->taskCatalogueManager->findNewTask($excludedTasks);
             $data->newTask = (bool)$newTask;
+            $data->assignedTaskHistory = $this->taskAssignedManager->findTaskHistory($this->user->getId());
         }
 
         return $data;
