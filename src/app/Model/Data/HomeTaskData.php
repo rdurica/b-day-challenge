@@ -18,6 +18,9 @@ final class HomeTaskData
     /** @var bool Are available tasks for user? */
     public bool $newTask = false;
 
+    /** @var bool is old task expired? */
+    public bool $expiredOldTask = false;
+
     /** @var ActiveRow|null Active task (started, assigned). */
     public ?ActiveRow $assignedActiveTask = null;
 

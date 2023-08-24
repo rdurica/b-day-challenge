@@ -1,1 +1,24 @@
-{control form}
+{block content}
+    {form form}
+        <h4>Zadání</h4>
+        {$task->description|noescape}
+        <h4>Odpověd</h4>
+        {if isset($form['pictures'])}
+            <label n:name="pictures" class="form-label">Nahrej obrázky</label>
+            <input n:name="pictures" class="form-control" type="file" multiple/>
+        {/if}
+        {if isset($form['video'])}
+            <label n:name="video" class="form-label mt-3">Nahrej video</label>
+            <input n:name="video" class="form-control" type="file"/>
+        {/if}
+
+        {if isset($form['text'])}
+
+            <label n:name="text" class="form-label mt-3">Odpověz na otazky</label>
+            {input text, class: 'wysiwyg'}
+        {/if}
+        <div class="text-right pt-1">
+            {input finish, class:"btn btn-success"}
+        </div>
+    {/form}
+{/block}

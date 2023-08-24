@@ -6,6 +6,7 @@ namespace App\Model\Manager;
 
 use App\Model\Constant\TaskStatus;
 use Nette\Database\Table\ActiveRow;
+use Nette\Database\Table\Selection;
 use Rdurica\Core\Model\Manager\Manager;
 
 /**
@@ -85,6 +86,19 @@ final class TaskAssignedManager extends Manager
             'task_id' => $taskId,
             'user_id' => $userId,
             'status_id' => TaskStatus::ACTIVE,
+        ]);
+    }
+
+    /**
+     * Set assigned task as expired.
+     *
+     * @param int $id
+     * @return void
+     */
+    public function setExpired(int $id): void
+    {
+        $this->findById($id)->update([
+            'status_id' => TaskStatus::EXPIRED,
         ]);
     }
 }

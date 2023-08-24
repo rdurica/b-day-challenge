@@ -8,6 +8,7 @@ use App\Component\Form\CompleteTask\CompleteTaskForm;
 use App\Component\Form\CompleteTask\ICompleteTaskForm;
 use App\Component\Form\Rules\IRulesForm;
 use App\Component\Form\Rules\RulesForm;
+use App\Exception\ExpiredTaskException;
 use App\Exception\NewTaskException;
 use App\Model\Constant\Resource;
 use App\Model\Facade\TaskFacade;
@@ -57,6 +58,12 @@ final class HomePresenter extends Presenter
     {
         $data = $this->taskFactory->prepareHomeDefaultData();
         $this->getPresenter()->template->data = $data;
+
+        if ($data->expiredOldTask) {
+            $this->flashMessage('Nestich si splnit ukol v danom limite.', FlashType::WARNING);
+            $this->getPresenter()->redirect('this');
+        }
+
     }
 
     /**

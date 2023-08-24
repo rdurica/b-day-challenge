@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Facade;
 
+use App\Exception\ExpiredTaskException;
 use App\Exception\NewTaskException;
 use App\Model\Constant\TaskStatus;
 use App\Model\Data\HomeTaskData;
@@ -43,8 +44,21 @@ final class TaskFacade
      */
     public function prepareHomeDefaultData(): HomeTaskData
     {
+
+        $assignedActiveTask = $this->taskAssignedManager->findActiveTask($this->user->getId());
+
         $data = new HomeTaskData();
-        $data->assignedActiveTask = $this->taskAssignedManager->findActiveTask($this->user->getId());
+        $now = (new DateTime())->format('Y-m-d');
+
+
+        if($assignedActiveTask && $assignedActiveTask->task->due_date < $now){
+            $data->expiredOldTask = true;
+            $this->taskAssignedManager->setExpired($assignedActiveTask->id);
+            $assignedActiveTask = null;
+        }
+
+
+        $data->assignedActiveTask = $assignedActiveTask;
         if (!$data->assignedActiveTask) {
             $excludedTasks = $this->taskAssignedManager->findIdsOfTasksForExclude($this->user->getId());
             $newTask = $this->taskCatalogueManager->findNewTask($excludedTasks);
@@ -72,7 +86,7 @@ final class TaskFacade
         $this->taskAssignedManager->assignTaskToUser($newTask->id, $this->user->getId());
     }
 
-    public function finishTask(int $taskId): void
+    public function finishTask(int $taskId, ?string $text): void
     {
         // Todo: validate
         $this->taskAssignedManager
@@ -80,6 +94,7 @@ final class TaskFacade
             ->get($taskId)
             ->update([
                 'status_id' => TaskStatus::CONFIRMED,
+                'text_answer' => $text,
                 'finish_date' => new DateTime()
             ]);
     }

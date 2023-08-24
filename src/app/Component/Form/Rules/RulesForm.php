@@ -63,7 +63,7 @@ final class RulesForm extends Component
         try {
             $this->rulesManager->update($data);
             $this->getPresenter()->flashMessage('Pravidla úspěšně upravena', FlashType::SUCCESS);
-        } catch (Exception){
+        } catch (Exception) {
             $this->getPresenter()->flashMessage('Oops. Něco se pokazilo', FlashType::ERROR);
             $this->getPresenter()->redirect('this');
         }
