@@ -1,0 +1,32 @@
+{block navbar}{include './../navbar.latte'}{/block}
+{block content}
+{varType Nette\Database\Table\ActiveRow $assignedTask}
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="card mt-2">
+            <div class="card-header">
+                <i class="fa-solid fa-list-check"></i> Vyhodnocení úkolu: {$assignedTask->task->summary}
+            </div>
+            <div class="card-body">
+                <h4>Ukol</h4>
+                {$assignedTask->task->description|noescape}
+
+                <div n:if="$assignedTask->task->require_text === 1">
+                    <h4>Vysledek (Text)</h4>
+                    {$assignedTask->text_answer|noescape}
+                </div>
+                <div n:if="$assignedTask->task->require_photos === 1">
+                    <h4>Vysledek (Fotky)</h4>
+
+                </div>
+                <div n:if="$assignedTask->task->require_video === 1">
+                    <h4>Vysledek (Video)</h4>
+                </div>
+                <hr>
+                <a n:href="Task:taskAccept $assignedTask->id" class="btn btn-success" style="">Potvrdit</a>
+                <a href="" class="btn btn-warning" style="">Zamitnut (nahradni ukol)</a>
+                <a n:href="Task:taskReject $assignedTask->id" class="btn btn-danger" style="">Zamitnut</a>
+            </div>
+        </div>
+    </div>
+</div>

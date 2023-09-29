@@ -8,7 +8,6 @@ use App\Component\Form\CompleteTask\CompleteTaskForm;
 use App\Component\Form\CompleteTask\ICompleteTaskForm;
 use App\Component\Form\Rules\IRulesForm;
 use App\Component\Form\Rules\RulesForm;
-use App\Exception\ExpiredTaskException;
 use App\Exception\NewTaskException;
 use App\Model\Constant\Resource;
 use App\Model\Facade\TaskFacade;
@@ -49,10 +48,14 @@ final class HomePresenter extends Presenter
     #[Inject]
     public TaskFacade $taskFactory;
 
+    /** @var string Presenter name. */
+    public const PRESENTER_NAME = 'Home';
+
     /**
      * Home page.
      *
      * @return void
+     * @throws AbortException
      */
     public function renderDefault(): void
     {
@@ -63,7 +66,6 @@ final class HomePresenter extends Presenter
             $this->flashMessage('Nestich si splnit ukol v danom limite.', FlashType::WARNING);
             $this->getPresenter()->redirect('this');
         }
-
     }
 
     /**

@@ -2,7 +2,7 @@
 {varType App\Model\Data\HomeTaskData $data}
 {block content}
 <div class="row">
-    <div n:if="$data->expiredOldTask" class="col-md-6 offset-md-1">
+    <div n:if="$data->expiredOldTask || $data->newTask" class="col-md-6 offset-md-1">
         <div class="card text-center mt-2">
             <div class="card-header">Dostupný nový úkol</div>
             <div class="card-body">
@@ -24,7 +24,7 @@
             <div class="card-footer text-muted">Končí {$data->assignedActiveTask->task->due_date|date: 'd.m.Y'}</div>
         </div>
     </div>
-    <div n:if="!$data->expiredOldTask && !$data->assignedActiveTask" class="col-md-6 offset-md-1">
+    <div n:if="!$data->expiredOldTask && !$data->assignedActiveTask && $data->newTask === false" class="col-md-6 offset-md-1">
         <div class="card text-center mt-2">
             <div class="card-body">
                 <h5 class="card-title">Nemas zadne ukoly k plneni.</h5>

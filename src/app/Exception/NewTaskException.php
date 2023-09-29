@@ -16,7 +16,7 @@ use Exception;
 final class NewTaskException extends Exception
 {
     /**
-     * Konstruktor.
+     * Constructor.
      */
     public function __construct()
     {

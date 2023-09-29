@@ -27,7 +27,6 @@ final class TaskAssignedManager extends Manager
         return self::TABLE;
     }
 
-
     /**
      * Find confirmed task for user (started but not finished).
      *
@@ -100,5 +99,16 @@ final class TaskAssignedManager extends Manager
         $this->findById($id)->update([
             'status_id' => TaskStatus::EXPIRED,
         ]);
+    }
+
+    /**
+     * Find all tasks which requires evaluation.
+     *
+     * @return Selection
+     */
+    public function findNotEvaluatedTasks(): Selection
+    {
+        return $this->find()
+            ->where('status_id = ?', TaskStatus::CONFIRMED);
     }
 }

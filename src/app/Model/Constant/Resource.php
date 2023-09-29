@@ -18,4 +18,7 @@ final class Resource
 
     /** Task catalogue. */
     public const TASK_CATALOGUE = 'task_catalogue';
+
+    /** Task validation. */
+    public const TASK_EVALUATION = 'task_evaluation';
 }

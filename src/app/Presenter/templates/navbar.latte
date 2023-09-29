@@ -58,6 +58,9 @@
                     <li n:if="$user->isAllowed(App\Model\Constant\Resource::TASK_CATALOGUE, Rdurica\Core\Constant\Privileges::VIEW)">
                         <a class="dropdown-item" n:href="Task:">Katalog úkolů</a>
                     </li>
+                    <li n:if="$user->isAllowed(App\Model\Constant\Resource::TASK_EVALUATION, Rdurica\Core\Constant\Privileges::VIEW)">
+                        <a class="dropdown-item" n:href="Task:Evaluation">Úkoly k vyhodnocení</a>
+                    </li>
                     <li>
                         <a class="dropdown-item" n:href="signOut!">Logout</a>
                     </li>
