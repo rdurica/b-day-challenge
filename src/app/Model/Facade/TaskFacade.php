@@ -10,6 +10,8 @@ use App\Model\Constant\TaskStatus;
 use App\Model\Data\HomeTaskData;
 use App\Model\Manager\TaskAssignedManager;
 use App\Model\Manager\TaskCatalogueManager;
+use App\Util\FileUploadUtil;
+use Exception;
 use Nette\Database\Table\ActiveRow;
 use Nette\InvalidStateException;
 use Nette\Security\User;
@@ -59,6 +61,49 @@ final readonly class TaskFacade
         }
 
         return $data;
+    }
+
+    /**
+     * Return all paths to images.
+     *
+     * @param int $assignedTaskId
+     * @return array
+     */
+    public function prepareTaskImages(int $assignedTaskId): array
+    {
+        $imagesDir = FileUploadUtil::getAssignedTaskImgDir($assignedTaskId, true);
+
+        if (file_exists($imagesDir) === false) {
+            return [];
+        }
+
+        $images = scandir($imagesDir);
+        unset($images[0], $images[1]);
+
+        foreach ($images as $key => $image) {
+            $images[$key] = FileUploadUtil::getAssignedTaskImgDir($assignedTaskId) . $image;
+        }
+
+        return $images;
+    }
+
+    /**
+     * Return video path.
+     *
+     * @param int $assignedTaskId
+     * @return string
+     */
+    public function prepareTaskVideo(int $assignedTaskId): string
+    {
+        try {
+            $videoDir = FileUploadUtil::getAssignedTaskVideoDir($assignedTaskId, true);
+            $directory = scandir($videoDir);
+            $video = $directory[2];
+
+            return FileUploadUtil::getAssignedTaskVideoDir($assignedTaskId) . $video;
+        } catch (Exception) {
+            return '';
+        }
     }
 
     /**

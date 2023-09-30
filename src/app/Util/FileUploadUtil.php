@@ -16,32 +16,35 @@ final class FileUploadUtil
     /**
      * Get root directory for uploading.
      *
+     * @param bool $fullPath
      * @return string
      */
-    public static function getRootDir(): string
+    public static function getRootDir(bool $fullPath = false): string
     {
-        return '/www-data/b_day_challenge/';
+        return $fullPath ? '/app/src/www/b_day_challenge/' : 'b_day_challenge/';
     }
 
     /**
      * Get image directory for assigned task.
      *
-     * @param int $assignedTaskId
+     * @param int  $assignedTaskId
+     * @param bool $fullPath
      * @return string
      */
-    public static function getAssignedTaskImgDir(int $assignedTaskId): string
+    public static function getAssignedTaskImgDir(int $assignedTaskId, bool $fullPath = false): string
     {
-        return sprintf('%s%s%s', self::getRootDir(), $assignedTaskId, '/img/',);
+        return sprintf('%s%s%s', self::getRootDir($fullPath), $assignedTaskId, '/img/',);
     }
 
     /**
      * Get video directory for assigned task.
      *
-     * @param int $assignedTaskId
+     * @param int  $assignedTaskId
+     * @param bool $fullPath
      * @return string
      */
-    public static function getAssignedTaskVideoDir(int $assignedTaskId): string
+    public static function getAssignedTaskVideoDir(int $assignedTaskId, bool $fullPath = false): string
     {
-        return sprintf('%s%s%s', self::getRootDir(), $assignedTaskId, '/video/',);
+        return sprintf('%s%s%s', self::getRootDir($fullPath), $assignedTaskId, '/video/',);
     }
 }

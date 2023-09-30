@@ -144,7 +144,12 @@ final class TaskPresenter extends Presenter
     {
         try {
             $assignedTask = $this->facade->prepareEvaluateData($id);
+            $images = $this->facade->prepareTaskImages($id);
+            $video = $this->facade->prepareTaskVideo($id);
+
             $this->getTemplate()->assignedTask = $assignedTask;
+            $this->getTemplate()->images = $images;
+            $this->getTemplate()->video = $video;
         } catch (NoResultException|InvalidStateException $e) {
             $this->flashMessage($e->getMessage(), FlashType::ERROR);
             $this->redirect('Home:');

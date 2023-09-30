@@ -127,8 +127,8 @@ final class CompleteTaskForm extends Component
     {
         if ($file->isImage() and $file->isOk()) {
             $fileExt = strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
-            $fileName = sprintf('%s%s%s%s', 'img-', $id, '.', $fileExt);
-            $filePath = sprintf('%s%s', FileUploadUtil::getAssignedTaskImgDir($assignedTaskId), $fileName);
+            $fileName = sprintf('%s%s%s', 'img-', $id, $fileExt);
+            $filePath = sprintf('%s%s', FileUploadUtil::getAssignedTaskImgDir($assignedTaskId, true), $fileName);
 
             $file->move($filePath);
         }
@@ -145,8 +145,8 @@ final class CompleteTaskForm extends Component
     {
         if ($file->isOk()) {
             $fileExt = strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
-            $fileName = sprintf('%s%s%s', 'video', '.', $fileExt);
-            $filePath = sprintf('%s%s', FileUploadUtil::getAssignedTaskVideoDir($assignedTaskId), $fileName);
+            $fileName = sprintf('%s%s', 'video', $fileExt);
+            $filePath = sprintf('%s%s', FileUploadUtil::getAssignedTaskVideoDir($assignedTaskId, true), $fileName);
 
             $file->move($filePath);
         }
