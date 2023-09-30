@@ -7,6 +7,7 @@ namespace App\Component\Form\CompleteTask;
 use App\Model\Facade\TaskFacade;
 use App\Model\Manager\TaskAssignedManager;
 use App\Presenter\HomePresenter;
+use App\Util\FileUploadUtil;
 use Exception;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
@@ -84,7 +85,7 @@ final class CompleteTaskForm extends Component
             $assignedTaskId = $this->getParameterAssignedTaskId();
             $this->processForm($assignedTaskId, $data);
             $this->getPresenter()->flashMessage('Ukol dokoncen', FlashType::SUCCESS);
-        } catch (Exception $e){
+        } catch (Exception $e) {
             $this->getPresenter()->flashMessage('Oops. Něco se pokazilo', FlashType::ERROR);
             $this->getPresenter()->redirect('this');
         }
@@ -92,29 +93,61 @@ final class CompleteTaskForm extends Component
         $this->getPresenter()->redirect('Home:');
     }
 
+
     /**
-     * Save file to disk.
+     * @param int       $assignedTaskId
+     * @param ArrayHash $data
+     * @return void
+     */
+    public function processForm(int $assignedTaskId, ArrayHash $data): void
+    {
+        if (isset($data->pictures)) {
+            foreach ($data->pictures as $key => $picture) {
+                $this->saveImageFile($key, $picture, $assignedTaskId);
+            }
+        }
+        if (isset($data->video)) {
+            $this->saveVideoFile($data->video, $assignedTaskId);
+        }
+
+        $text = $data->text ?? null;
+
+        $this->taskFacade->finishTask($assignedTaskId, $text);
+    }
+
+    /**
+     * Save image file to disk.
      *
      * @param int        $id
      * @param FileUpload $file
-     * @param int        $taskId
+     * @param int        $assignedTaskId
      * @return void
      */
-    public function saveFile(int $id, FileUpload $file, int $taskId): void
+    public function saveImageFile(int $id, FileUpload $file, int $assignedTaskId): void
     {
         if ($file->isImage() and $file->isOk()) {
-            $file_ext = strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
+            $fileExt = strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
+            $fileName = sprintf('%s%s%s%s', 'img-', $id, '.', $fileExt);
+            $filePath = sprintf('%s%s', FileUploadUtil::getAssignedTaskImgDir($assignedTaskId), $fileName);
 
-            $filePath = sprintf(
-                '%s%s%s%s%s%s%s',
-                '/www-data/b_day_challenge/',
-                'assignment_',
-                $taskId,
-                '/img-',
-                $id,
-                '.',
-                $file_ext
-            );
+            $file->move($filePath);
+        }
+    }
+
+    /**
+     * Save video file to disk.
+     *
+     * @param FileUpload $file
+     * @param int        $assignedTaskId
+     * @return void
+     */
+    public function saveVideoFile(FileUpload $file, int $assignedTaskId): void
+    {
+        if ($file->isOk()) {
+            $fileExt = strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
+            $fileName = sprintf('%s%s%s', 'video', '.', $fileExt);
+            $filePath = sprintf('%s%s', FileUploadUtil::getAssignedTaskVideoDir($assignedTaskId), $fileName);
+
             $file->move($filePath);
         }
     }
@@ -136,24 +169,5 @@ final class CompleteTaskForm extends Component
         $this->getTemplate()->render();
     }
 
-    /**
-     * @param ArrayHash $data
-     * @return void
-     */
-    public function processForm(int $assignedTaskId, ArrayHash $data): void
-    {
-        if (isset($data->pictures)) {
-            foreach ($data->pictures as $key => $picture) {
-                $this->saveFile($key, $picture, $assignedTaskId);
-            }
-        }
-        if (isset($data->video)) {
-            $this->saveFile(1, $data->video, $assignedTaskId);
-        }
-
-        $text = $data->text ?? null;
-
-        $this->taskFacade->finishTask($assignedTaskId, $text);
-    }
 
 }
