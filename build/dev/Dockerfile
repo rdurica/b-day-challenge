@@ -26,5 +26,5 @@ COPY build/dev/php.ini /usr/local/etc/php/php.ini
 
 WORKDIR /app/src
 
-RUN mkdir log && mkdir temp && mkdir temp/cache && chmod 777 log && chmod -R 777 temp && chmod -R 777 /www-data
+RUN mkdir log && mkdir temp && mkdir temp/cache && chmod 777 log && chmod -R 777 temp
 RUN chown -R 1000:1000 /app/src
