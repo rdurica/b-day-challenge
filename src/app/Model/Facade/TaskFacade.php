@@ -97,6 +97,9 @@ final readonly class TaskFacade
     {
         try {
             $videoDir = FileUploadUtil::getAssignedTaskVideoDir($assignedTaskId, true);
+            if (is_dir($videoDir) === false) {
+                return '';
+            }
             $directory = scandir($videoDir);
             $video = $directory[2];
 
