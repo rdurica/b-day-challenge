@@ -12,6 +12,7 @@ use Exception;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Http\FileUpload;
+use Nette\Localization\Translator;
 use Nette\Utils\ArrayHash;
 use Rdurica\Core\Component\Component;
 use Rdurica\Core\Component\ComponentRenderer;
@@ -33,10 +34,12 @@ final class CompleteTaskForm extends Component
      *
      * @param TaskFacade          $taskFacade
      * @param TaskAssignedManager $taskAssignedManager
+     * @param Translator          $translator
      */
     public function __construct(
         private readonly TaskFacade $taskFacade,
-        private readonly TaskAssignedManager $taskAssignedManager
+        private readonly TaskAssignedManager $taskAssignedManager,
+        private readonly Translator $translator
     ) {
     }
 
@@ -49,6 +52,7 @@ final class CompleteTaskForm extends Component
     {
         $assignedTaskId = $this->getParameterAssignedTaskId();
         $catalogueTask = $this->taskAssignedManager->findById($assignedTaskId)->task;
+        $labelButton = $this->translator->translate('labels.finish');
 
         $form = new Form();
         if ($catalogueTask->require_photos) {
@@ -65,7 +69,7 @@ final class CompleteTaskForm extends Component
             $form->addTextArea('text')
                 ->setRequired();
         }
-        $form->addSubmit('finish', 'Dokoncit');
+        $form->addSubmit('finish', $labelButton);
         $form->onSuccess[] = [$this, 'formOnSuccess'];
 
         return $form;
@@ -84,9 +88,11 @@ final class CompleteTaskForm extends Component
         try {
             $assignedTaskId = $this->getParameterAssignedTaskId();
             $this->processForm($assignedTaskId, $data);
-            $this->getPresenter()->flashMessage('Ukol dokoncen', FlashType::SUCCESS);
-        } catch (Exception $e) {
-            $this->getPresenter()->flashMessage('Oops. Něco se pokazilo', FlashType::ERROR);
+            $message = $this->translator->translate('messages.success.taskFinished');
+            $this->getPresenter()->flashMessage($message, FlashType::SUCCESS);
+        } catch (Exception) {
+            $message = $this->translator->translate('messages.error.generalError');
+            $this->getPresenter()->flashMessage($message, FlashType::ERROR);
             $this->getPresenter()->redirect('this');
         }
 
@@ -95,6 +101,8 @@ final class CompleteTaskForm extends Component
 
 
     /**
+     * Process form.
+     *
      * @param int       $assignedTaskId
      * @param ArrayHash $data
      * @return void
@@ -152,6 +160,11 @@ final class CompleteTaskForm extends Component
         }
     }
 
+    /**
+     * Get parameter from url.
+     *
+     * @return int
+     */
     private function getParameterAssignedTaskId(): int
     {
         /** @var HomePresenter $presenter */
@@ -159,7 +172,8 @@ final class CompleteTaskForm extends Component
         return $presenter->getIntParameter('taskAssignedId');
     }
 
-    public function render()
+    /** @inheritDoc */
+    public function render(): void
     {
         $assignedTaskId = $this->getParameterAssignedTaskId();
         $catalogueTask = $this->taskAssignedManager->findById($assignedTaskId)->task;
@@ -168,6 +182,4 @@ final class CompleteTaskForm extends Component
         $this->getTemplate()->task = $catalogueTask;
         $this->getTemplate()->render();
     }
-
-
 }

@@ -4,51 +4,53 @@
 <div class="row">
     <div n:if="$data->expiredOldTask || $data->newTask" class="col-md-6 offset-md-1">
         <div class="card text-center mt-2">
-            <div class="card-header">Dostupný nový úkol</div>
+            <div class="card-header">{_labels.newTaskAvailableTitle}</div>
             <div class="card-body">
-                <h5 class="card-title">Dostupny novy ukol. Pro start klikni na tlacitko zacit</h5>
-                <a n:href="startTask!" class="btn btn-primary ">Začít</a>
+                <h5 class="card-title">{_labels.newTaskAvailableDescription}</h5>
+                <a n:href="startTask!" class="btn btn-primary ">{_labels.start}</a>
             </div>
         </div>
     </div>
     <div n:if="$data->assignedActiveTask" class="col-md-10 offset-md-1">
         <div class="card mt-2">
-            <div class="card-header text-center ">Aktivní úkol</div>
+            <div class="card-header text-center ">{_labels.activeTask}</div>
             <div class="card-body">
                 <h5 class="card-title text-center">{$data->assignedActiveTask->task->summary}</h5>
                 <p class="card-text">
                     {$data->assignedActiveTask->task->description|noescape}
                 </p>
-                <a n:href="Home:FinishTask $data->assignedActiveTask->id" class="btn btn-success">Dokoncit</a>
+                <a n:href="Home:FinishTask $data->assignedActiveTask->id" class="btn btn-success">{_labels.finish}</a>
             </div>
-            <div class="card-footer text-muted">Končí {$data->assignedActiveTask->task->due_date|date: 'd.m.Y'}</div>
+            <div class="card-footer text-muted">{_labels.needsToBeFinished} {$data->assignedActiveTask->task->due_date|date: 'd.m.Y'}</div>
         </div>
     </div>
-    <div n:if="!$data->expiredOldTask && !$data->assignedActiveTask && $data->newTask === false" class="col-md-6 offset-md-1">
+    <div n:if="!$data->expiredOldTask && !$data->assignedActiveTask && $data->newTask === false"
+            class="col-md-6 offset-md-1">
         <div class="card text-center mt-2">
             <div class="card-body">
-                <h5 class="card-title">Nemas zadne ukoly k plneni.</h5>
+                <h5 class="card-title">{_messages.info.noTasksAvailable}</h5>
             </div>
         </div>
     </div>
     <div n:if="!$data->assignedActiveTask && count($data->assignedTaskHistory) > 0"
             class="col-md-3 offset-md-1 overflow-auto">
-        <h3>Historie ({count($data->assignedTaskHistory)})</h3>
+        <h3>{_labels.history} ({count($data->assignedTaskHistory)})</h3>
         <div class="card shadow-3 mt-2">
             <div class="card-body overflow-auto" style="max-height: 80vh;">
                 {foreach $data->assignedTaskHistory as $historyItem}
                     {if $historyItem->status_id === App\Model\Constant\TaskStatus::CONFIRMED}
-                        <span class="badge badge-primary"><i class="fa-regular fa-clock"></i> Čeká na schválení</span>
+                        <span class="badge badge-primary"><i
+                                    class="fa-regular fa-clock"></i> {_labels.status.waitingForApproval}</span>
                     {elseif $historyItem->status_id === App\Model\Constant\TaskStatus::DONE}
                         <span class="badge badge-success"><i
                                     class="fa-regular fa-circle-check"></i> {$historyItem->finish_date|date: 'd.m.Y'}</span>
                     {elseif $historyItem->status_id === App\Model\Constant\TaskStatus::EXPIRED}
-                        <span class="badge badge-warning"><i class="fa-regular fa-circle-xmark"></i> Expirace</span>
+                        <span class="badge badge-warning"><i
+                                    class="fa-regular fa-circle-xmark"></i> {_labels.status.expired}</span>
 
                     {elseif $historyItem->status_id === App\Model\Constant\TaskStatus::REJECTED}
                         <span class="badge badge-danger"><i
                                     class="fa-regular fa-circle-xmark"></i> {$historyItem->finish_date|date: 'd.m.Y'}</span>
-
                     {/if}
                     <p>{$historyItem->task->summary}</p>
                     <hr n:if="!$iterator->last">

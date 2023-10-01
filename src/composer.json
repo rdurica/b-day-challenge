@@ -9,7 +9,8 @@
 		"rdurica/core": "dev-main",
 		"tracy/tracy": "^2.9",
 		"ublaboo/datagrid": "dev-master",
-		"nepada/security-annotations": "^5.0"
+		"nepada/security-annotations": "^5.0",
+		"contributte/translation": "^2.0"
 	},
 	"require-dev": {
 		"nette/tester": "^2.4"

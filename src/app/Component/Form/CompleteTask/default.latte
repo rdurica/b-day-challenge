@@ -1,20 +1,19 @@
 {block content}
     {form form}
-        <h4>Zadání</h4>
+        <h4>{_labels.task}</h4>
         {$task->description|noescape}
-        <h4>Odpověd</h4>
+        <h4>{_labels.forTaskCompletion}</h4>
         {if isset($form['pictures'])}
-            <label n:name="pictures" class="form-label">Nahrej obrázky</label>
+            <label n:name="pictures" class="form-label">{_labels.uploadPhotos}</label>
             <input n:name="pictures" class="form-control" type="file" multiple/>
         {/if}
         {if isset($form['video'])}
-            <label n:name="video" class="form-label mt-3">Nahrej video</label>
+            <label n:name="video" class="form-label mt-3">{_labels.uploadVideo}</label>
             <input n:name="video" class="form-control" type="file"/>
         {/if}
 
         {if isset($form['text'])}
-
-            <label n:name="text" class="form-label mt-3">Odpověz na otazky</label>
+            <label n:name="text" class="form-label mt-3">{_labels.answerQuestions}</label>
             {input text, class: 'wysiwyg'}
         {/if}
         <div class="text-right pt-1">

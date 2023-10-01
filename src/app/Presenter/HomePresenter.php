@@ -17,6 +17,7 @@ use Nepada\SecurityAnnotations\SecurityAnnotations;
 use Nette\Application\AbortException;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\DI\Attributes\Inject;
+use Nette\Localization\Translator;
 use Rdurica\Core\Constant\FlashType;
 use Rdurica\Core\Constant\Privileges;
 use Rdurica\Core\Presenter\Presenter;
@@ -48,6 +49,9 @@ final class HomePresenter extends Presenter
     #[Inject]
     public TaskFacade $taskFactory;
 
+    #[Inject]
+    public Translator $translator;
+
     /** @var string Presenter name. */
     public const PRESENTER_NAME = 'Home';
 
@@ -63,7 +67,8 @@ final class HomePresenter extends Presenter
         $this->getPresenter()->template->data = $data;
 
         if ($data->expiredOldTask) {
-            $this->flashMessage('Nestich si splnit ukol v danom limite.', FlashType::WARNING);
+            $message = $this->translator->translate('messages.error.taskExpired');
+            $this->flashMessage($message, FlashType::WARNING);
             $this->getPresenter()->redirect('this');
         }
     }
@@ -90,6 +95,12 @@ final class HomePresenter extends Presenter
     {
     }
 
+    /**
+     * Finish task page.
+     *
+     * @param int $taskAssignedId
+     * @return void
+     */
     public function renderFinishTask(int $taskAssignedId): void
     {
     }
@@ -104,16 +115,17 @@ final class HomePresenter extends Presenter
     {
         try {
             $this->taskFactory->assignTask();
-            $this->flashMessage('Ukol uspesne zapocal.', FlashType::SUCCESS);
+            $message = $this->translator->translate('messages.success.taskStarted');
+            $this->flashMessage($message, FlashType::SUCCESS);
         } catch (UniqueConstraintViolationException) {
-            $this->flashMessage('Ukol jiz existuje.', FlashType::ERROR);
+            $message = $this->translator->translate('messages.error.taskAlreadyExists');
+            $this->flashMessage($message, FlashType::ERROR);
         } catch (NewTaskException $e) {
             $this->flashMessage($e->getMessage(), FlashType::WARNING);
         }
 
         $this->getPresenter()->redirect('this');
     }
-
 
     /**
      * Rules form component.
@@ -125,7 +137,11 @@ final class HomePresenter extends Presenter
         return $this->rulesForm->create();
     }
 
-
+    /**
+     * Complete task component.
+     *
+     * @return CompleteTaskForm
+     */
     protected function createComponentCompleteTaskForm(): CompleteTaskForm
     {
         return $this->completeTaskForm->create();

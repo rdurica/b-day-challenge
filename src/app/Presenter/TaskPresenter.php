@@ -18,6 +18,7 @@ use Nepada\SecurityAnnotations\SecurityAnnotations;
 use Nette\Application\AbortException;
 use Nette\DI\Attributes\Inject;
 use Nette\InvalidStateException;
+use Nette\Localization\Translator;
 use Rdurica\Core\Constant\FlashType;
 use Rdurica\Core\Constant\Privileges;
 use Rdurica\Core\Presenter\Presenter;
@@ -49,6 +50,9 @@ final class TaskPresenter extends Presenter
     #[Inject]
     public ITaskForm $taskForm;
 
+    #[Inject]
+    public Translator $translator;
+
     /** @var string Presenter name. */
     public const PRESENTER_NAME = 'Task';
 
@@ -72,7 +76,8 @@ final class TaskPresenter extends Presenter
     public function actionTaskReject(int $id): void
     {
         $this->facade->rejectTask($id);
-        $this->flashMessage('Ukol uspesne zamitnut bez nahradniho ukolu.', FlashType::SUCCESS);
+        $message = $this->translator->translate('messages.success.taskRejected');
+        $this->flashMessage($message, FlashType::SUCCESS);
         $this->redirect('Task:evaluation');
     }
 
@@ -87,7 +92,8 @@ final class TaskPresenter extends Presenter
     public function actionTaskAccept(int $id): void
     {
         $this->facade->acceptTask($id);
-        $this->flashMessage('Ukol uspesne akceptovan.', FlashType::SUCCESS);
+        $message = $this->translator->translate('messages.success.taskAccepted');
+        $this->flashMessage($message, FlashType::SUCCESS);
         $this->redirect('Task:evaluation');
     }
 
@@ -150,8 +156,9 @@ final class TaskPresenter extends Presenter
             $this->getTemplate()->assignedTask = $assignedTask;
             $this->getTemplate()->images = $images;
             $this->getTemplate()->video = $video;
-        } catch (NoResultException|InvalidStateException $e) {
-            $this->flashMessage($e->getMessage(), FlashType::ERROR);
+        } catch (NoResultException|InvalidStateException) {
+            $message = $this->translator->translate('messages.error.generalError');
+            $this->flashMessage($message, FlashType::ERROR);
             $this->redirect('Home:');
         }
     }
@@ -167,7 +174,7 @@ final class TaskPresenter extends Presenter
     }
 
     /**
-     * Task evaluation datagrid.
+     * Task evaluation data grid.
      *
      * @return TaskEvaluationGrid
      */

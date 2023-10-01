@@ -1,0 +1,19 @@
+# Messages
+info:
+    noTasksAvailable: 'Aktuálně nemáte žádné úkoly k plnění.'
+
+error:
+    generalError: 'Oops. Něco se pokazilo'
+    uniqueTaskName: 'Název úkolu musí být unikátny'
+    taskAlreadyExists: 'Úkol již existuje a není možné ho znovu začít plnit'
+    taskExpired: 'Úkol si nestih splnit v požadovaném limitu'
+
+success:
+    rulesUpdated: 'Pravidlá hry úspěšně upravena'
+    taskAccepted: 'Úkol označen jako splněný'
+    taskCreated: 'Úkol úspěšně vytvořen'
+    taskFinished: 'Úkol byl úspěšne dokončen'
+    taskRejected: 'Úkol označen jako nesplněný'
+    taskStarted: 'Úkol úspěšně začal'
+    taskUpdated: 'Úkol úspěšně upraven'
+    taskDeleted: 'Úkol úspěšně smazán'

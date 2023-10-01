@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Component\Form\Task;
 
-use App\Model\Data\TaskCatalogueData;
 use App\Model\Manager\TaskCatalogueManager;
 use Exception;
+use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
+use Nette\Localization\Translator;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\DateTime;
 use Rdurica\Core\Component\Component;
@@ -16,7 +17,7 @@ use Rdurica\Core\Component\ComponentRenderer;
 use Rdurica\Core\Constant\FlashType;
 
 /**
- * TaskForm
+ * TaskForm.
  *
  * @package   App\Component\Form\Task
  * @author    Robert Durica <r.durica@gmail.com>
@@ -30,9 +31,12 @@ final class TaskForm extends Component
      * Constructor.
      *
      * @param TaskCatalogueManager $taskCatalogueManager
+     * @param Translator           $translator
      */
-    public function __construct(private readonly TaskCatalogueManager $taskCatalogueManager)
-    {
+    public function __construct(
+        private readonly TaskCatalogueManager $taskCatalogueManager,
+        private readonly Translator $translator
+    ) {
     }
 
     /**
@@ -43,23 +47,27 @@ final class TaskForm extends Component
     public function createComponentForm(): Form
     {
         $editTaskId = $this->getPresenter()->getParameter('id');
+        $labelTask = $this->translator->translate('labels.task');
+        $labelStartDate = $this->translator->translate('labels.startDate');
+        $labelEndDate = $this->translator->translate('labels.endDate');
+        $labelButton = $this->translator->translate('labels.save');
 
         $form = new Form();
-        $form->addText('summary', 'Název')
+        $form->addText('summary', $labelTask)
             ->setMaxLength(100)
             ->setRequired();
-        $form->addTextArea('description', 'Popis');
-        $form->addText('start_date', 'Začátek')
+        $form->addTextArea('description');
+        $form->addText('start_date', $labelStartDate)
             ->setRequired();
-        $form->addText('due_date', 'Konec')
+        $form->addText('due_date', $labelEndDate)
             ->setRequired();
-        $form->addCheckbox('require_photos', 'Vyžaduje fotky');
-        $form->addCheckbox('require_video', 'Vyžaduje video');
-        $form->addCheckbox('require_text', 'Vyžaduje text');
-        $form->addCheckbox('is_enabled', 'Povolen')
+        $form->addCheckbox('require_photos');
+        $form->addCheckbox('require_video');
+        $form->addCheckbox('require_text');
+        $form->addCheckbox('is_enabled')
             ->setDefaultValue(true);
 
-        $form->addSubmit('save', 'Uložit');
+        $form->addSubmit('save', $labelButton);
 
         $form->onSuccess[] = [$this, 'formOnSuccess'];
 
@@ -78,9 +86,11 @@ final class TaskForm extends Component
     /**
      * Process form.
      *
-     * @param Form              $form
-     * @param TaskCatalogueData $data
+     * @param Form      $form
+     * @param ArrayHash $data
      * @return void
+     * @throws AbortException
+     * @throws Exception
      */
     public function formOnSuccess(Form $form, ArrayHash $data): void
     {
@@ -89,19 +99,21 @@ final class TaskForm extends Component
         $data->due_date = new DateTime($data->due_date);
 
         try {
-            $message = 'Úkol úspěšně vytvořen';
+            $message = $this->translator->translate('messages.success.taskCreated');
             if ($editTaskId) {
                 $this->taskCatalogueManager->updateById((int)$editTaskId, $data);
-                $message = 'Úkol úspěšně upraven';
+                $message = $this->translator->translate('messages.success.taskUpdated');
             } else {
                 $this->taskCatalogueManager->insert($data);
             }
             $this->getPresenter()->flashMessage($message, FlashType::SUCCESS);
         } catch (UniqueConstraintViolationException) {
-            $this->getPresenter()->flashMessage('Název úkolu musí být unikátny', FlashType::ERROR);
+            $message = $this->translator->translate('messages.error.uniqueTaskName');
+            $this->getPresenter()->flashMessage($message, FlashType::ERROR);
             $this->getPresenter()->redirect('this');
         } catch (Exception) {
-            $this->getPresenter()->flashMessage('Oops. Něco se pokazilo', FlashType::ERROR);
+            $message = $this->translator->translate('messages.error.generalError');
+            $this->getPresenter()->flashMessage($message, FlashType::ERROR);
             $this->getPresenter()->redirect('this');
         }
 

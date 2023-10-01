@@ -9,6 +9,7 @@ use App\Model\Manager\RulesManager;
 use Exception;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
+use Nette\Localization\Translator;
 use Rdurica\Core\Component\Component;
 use Rdurica\Core\Component\ComponentRenderer;
 use Rdurica\Core\Constant\FlashType;
@@ -28,8 +29,9 @@ final class RulesForm extends Component
      * Constructor.
      *
      * @param RulesManager $rulesManager
+     * @param Translator   $translator
      */
-    public function __construct(private readonly RulesManager $rulesManager)
+    public function __construct(private readonly RulesManager $rulesManager, private readonly Translator $translator)
     {
     }
 
@@ -40,13 +42,15 @@ final class RulesForm extends Component
      */
     public function createComponentForm(): Form
     {
+        $labelButton = $this->translator->translate('labels.save');
+
         $form = new Form();
         $form->setMappedType(RulesData::class);
         $form->addTextArea('message')
             ->setDefaultValue($this->rulesManager->findMessage()->message)
             ->setHtmlAttribute('style', 'height: 70vh;')
             ->setRequired();
-        $form->addSubmit('save', 'Uložit');
+        $form->addSubmit('save', $labelButton);
 
         $form->onSuccess[] = [$this, 'formOnSuccess'];
 
@@ -61,10 +65,12 @@ final class RulesForm extends Component
     public function formOnSuccess(Form $form, RulesData $data): void
     {
         try {
+            $message = $this->translator->translate('messages.success.rulesUpdated');
             $this->rulesManager->update($data);
-            $this->getPresenter()->flashMessage('Pravidla úspěšně upravena', FlashType::SUCCESS);
+            $this->getPresenter()->flashMessage($message, FlashType::SUCCESS);
         } catch (Exception) {
-            $this->getPresenter()->flashMessage('Oops. Něco se pokazilo', FlashType::ERROR);
+            $message = $this->translator->translate('messages.error.generalError');
+            $this->getPresenter()->flashMessage($message, FlashType::ERROR);
             $this->getPresenter()->redirect('this');
         }
 

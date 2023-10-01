@@ -11,9 +11,9 @@ session:
 extensions:
     rdurica.core: Rdurica\Core\Extension\CoreExtension
     securityAnnotations: Nepada\Bridges\SecurityAnnotationsDI\SecurityAnnotationsExtension
+    translation: Contributte\Translation\DI\TranslationExtension
 
 services:
-	- App\Router\RouterFactory::createRouter
 	- App\Component\Form\CompleteTask\ICompleteTaskForm
 	- App\Component\Form\Login\ILoginForm
 	- App\Component\Form\Rules\IRulesForm
@@ -22,6 +22,15 @@ services:
 	- App\Component\Grid\TaskEvaluation\ITaskEvaluationGrid
 	- App\Model\Facade\TaskFacade
 	- App\Model\Manager\RulesManager
-	- App\Model\Manager\TaskAlternativeManager
 	- App\Model\Manager\TaskAssignedManager
 	- App\Model\Manager\TaskCatalogueManager
+	- App\Router\RouterFactory::createRouter
+
+translation:
+	locales:
+		whitelist: [cs]
+		default: cs
+		fallback: [cs]
+	dirs:
+		- %appDir%/Translation
+	returnOriginalMessage: true # to not translate undefined messages, default is true

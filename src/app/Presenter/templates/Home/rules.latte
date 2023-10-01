@@ -8,7 +8,7 @@
                 {$rulesData->message|noescape}
                 <br>
                 <a n:if="$user->isAllowed(App\Model\Constant\Resource::RULES, Rdurica\Core\Constant\Privileges::EDIT)"
-                        n:href="rulesEdit" class="btn btn-primary">Upravit</a>
+                        n:href="rulesEdit" class="btn btn-primary">{_labels.edit}</a>
             </div>
         </div>
     </div>
