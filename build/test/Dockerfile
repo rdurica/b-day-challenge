@@ -24,7 +24,7 @@ COPY build/test/php.ini /usr/local/etc/php/php.ini
 
 WORKDIR /app/src
 
-RUN mkdir log && mkdir temp && mkdir temp/cache && mkdir www/b_day_challange && chmod 777 log && chmod -R 777 temp && chmod -R 777 www
+RUN mkdir log && mkdir temp && mkdir temp/cache && mkdir www && mkdir www/b_day_challange && chmod 777 log && chmod -R 777 temp && chmod -R 777 www
 
 COPY . /app
 
