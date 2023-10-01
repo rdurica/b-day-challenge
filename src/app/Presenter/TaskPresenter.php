@@ -78,7 +78,7 @@ final class TaskPresenter extends Presenter
         $this->facade->rejectTask($id);
         $message = $this->translator->translate('messages.success.taskRejected');
         $this->flashMessage($message, FlashType::SUCCESS);
-        $this->redirect('Task:evaluation');
+        $this->redirect('Task:create');
     }
 
     /**
