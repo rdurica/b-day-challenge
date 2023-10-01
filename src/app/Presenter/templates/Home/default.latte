@@ -19,7 +19,8 @@
                 <p class="card-text">
                     {$data->assignedActiveTask->task->description|noescape}
                 </p>
-                <a n:href="Home:FinishTask $data->assignedActiveTask->id" class="btn btn-success">{_labels.finish}</a>
+                <a n:href="Home:FinishTask $data->assignedActiveTask->id" class="btn btn-success">{_labels.continue}</a>
+                <p><small class="small"><sub><i class="fa fa-question-circle"></i>&nbsp;{_labels.continueHelpText}</sub></small></p>
             </div>
             <div class="card-footer text-muted">{_labels.needsToBeFinished} {$data->assignedActiveTask->task->due_date|date: 'd.m.Y'}</div>
         </div>
