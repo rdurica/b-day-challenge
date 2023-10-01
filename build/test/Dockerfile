@@ -26,6 +26,6 @@ WORKDIR /app/src
 
 RUN mkdir log && mkdir temp && mkdir temp/cache && chmod 777 log && chmod -R 777 temp
 
-COPY . .
+COPY . /app
 
 EXPOSE 80
